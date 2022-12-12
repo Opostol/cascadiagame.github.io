@@ -171,7 +171,7 @@ $(document).ready(function(){
 	let subTitleText = $('#setupLayer.layer .subtitle.is-6').html();
 	setupTiles(46); // Enter total number of tiles to be used in game as argument
 	setupTokens();
-	// setupScoringGoals(scoringGoalMode); //all or beginner
+	setupScoringGoals(); //all or beginner
 	updateNextTurn('setup');
 	checkScreenWidth();
 
@@ -3008,6 +3008,12 @@ function endOfGameSetup() {
 
 		$('#tileTokenContainer').html(scoringTableHTML);
 
+		$('#bear-finalScoringContainer > img').attr('src', scoringList.bear[tokenScoring.bear.pickedScoring].large);
+		$('#elk-finalScoringContainer > img').attr('src', scoringList.elk[tokenScoring.elk.pickedScoring].large);
+		$('#fox-finalScoringContainer > img').attr('src', scoringList.fox[tokenScoring.fox.pickedScoring].large);
+		$('#hawk-finalScoringContainer > img').attr('src', scoringList.hawk[tokenScoring.hawk.pickedScoring].large);
+		$('#salmon-finalScoringContainer > img').attr('src', scoringList.salmon[tokenScoring.salmon.pickedScoring].large); 
+
 	}, 400)
 
 	setTimeout(function(){
@@ -3256,41 +3262,6 @@ function checkForBlanks() {
 }
 
 
-function setupFinalScoring() {
-
-	$('#natureTokensScoringInput').html(natureCubesNum);
-
-	$('#mapHiddenOverlay .mapTileContainer .placedWildlifeToken').each(function(){
-		let tokenWildlife = $(this).attr('wildlife');
-		$(this).attr('src', `img/tokens/${tokenWildlife}.png`);
-	})
-
-	checkForBlanks();
-	processPlacedTilesAndTokens();
-
-	tokenScoring.bear.totalScore = calculateBearTokenScoring();
-	tokenScoring.elk.totalScore = calculateElkTokenScoring();
-	tokenScoring.fox.totalScore = calculateFoxTokenScoring();
-	tokenScoring.hawk.totalScore = calculateHawkTokenScoring();
-	tokenScoring.salmon.totalScore = calculateSalmonTokenScoring();
-
-	const allWildlife = Object.keys(tokenScoring);
-
-	for (const currentWildlife of allWildlife) {
-		$('#wildlifeScoringTable.finalScoringTable .scoreCell #' + currentWildlife + '-wildlifeScoringInput').html(tokenScoring[currentWildlife].totalScore);
-
-		$('#tileTokenContainer.finalScoring .finalScoringItem #' + currentWildlife + '-individualWildlifeScoringInput .individualPointsNum').html(tokenScoring[currentWildlife].totalScore);
-		if(tokenScoring[currentWildlife].totalScore == 1) {
-			$('#tileTokenContainer.finalScoring .finalScoringItem #' + currentWildlife + '-individualWildlifeScoringInput .pluralPoints').hide();
-		} else {
-			$('#tileTokenContainer.finalScoring .finalScoringItem #' + currentWildlife + '-individualWildlifeScoringInput .pluralPoints').show();
-		}
-		
-	}
-
-	updateAllSubtotals();
-	
-}
 
 var allPlacedTiles = {};
 var allPlacedTokens = {};
@@ -3596,14 +3567,6 @@ function calculateHabitatScoring() {
 		}
 	}
 }
-
-let tokenScoring = {
-	bear: {totalScore: 0},
-	elk: {totalScore: 0},
-	fox: {totalScore: 0},
-	hawk: {totalScore: 0},
-	salmon: {totalScore: 0}
-};
 
 function searchNeighbourTilesForWildlife(currentID, thisWildlife) {
 
