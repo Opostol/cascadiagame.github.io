@@ -1,5 +1,5 @@
 
-function calculateFoxTokenScoring() {
+var calculateFoxTokenScoring0 = function() {
 	let result = 0;
 	let foxScoringValues = {
 		'1': 1,

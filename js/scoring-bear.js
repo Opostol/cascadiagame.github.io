@@ -1,4 +1,4 @@
-function calculateBearTokenScoring() {
+var calculateBearTokenScoring0 = function() {
 
 	let bearScoringValues = {
 		'1': 4,
@@ -62,4 +62,47 @@ function calculateBearTokenScoring() {
 	else {
 		return 0;
 	}
+}
+
+var calculateBearTokenScoring1 = function() {
+
+	let bearScoringOfEachTriple = 10
+
+	let confirmedBearTriples = 0;
+
+	let unhandledTokenIDs = [];
+	let usedTokenIDs = [];
+
+	const tokenIDs = Object.keys(allPlacedTokens);
+			
+	for (const tokenID of tokenIDs) {
+
+		unhandledTokenIDs = [];
+		let groupCount = 0;
+
+		if(allPlacedTokens[tokenID] == 'bear' && usedTokenIDs.indexOf(tokenID) == -1) {
+			unhandledTokenIDs.push(tokenID);
+			do {
+				let siblingTokenID = unhandledTokenIDs.pop();
+				groupCount += 1;
+				usedTokenIDs.push(siblingTokenID);
+				let neighbourTiles = neighbourTileIDs(siblingTokenID);
+
+				for (let i = 0; i < neighbourTiles.length; i++) {
+					if(allPlacedTokens.hasOwnProperty(neighbourTiles[i])) {
+						// The neighbouring tile exists and has a placed token on it!
+						// Continue with the specified scoring process for this wildlife'
+						if(allPlacedTokens[neighbourTiles[i]] == 'bear' && usedTokenIDs.indexOf(neighbourTiles[i]) == -1) {
+							unhandledTokenIDs.push(neighbourTiles[i]);
+						}
+					}
+				}
+			} while (unhandledTokenIDs.length > 0);
+
+			if(groupCount == 3) {
+				confirmedBearTriples += 1
+			}
+		}
+	}
+	return confirmedBearTriples * bearScoringOfEachTriple;
 }

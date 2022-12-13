@@ -16,7 +16,7 @@ let elkScoringValues = {
 	'4': 13
 }
 
-function calculateElkTokenScoring() {
+var calculateElkTokenScoring0 = function() {
 	let result = 0;
 	const tokenIDs = Object.keys(allPlacedTokens);
 	for (const tokenID of tokenIDs) {

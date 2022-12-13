@@ -1,4 +1,4 @@
-function calculateHawkTokenScoring() {
+var calculateHawkTokenScoring0 = function() {
 	let hawkScoringValues = {
 		'0': 0,
 		'1': 2,

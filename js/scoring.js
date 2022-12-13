@@ -4,7 +4,15 @@ var scoringList = {
 			large: "img/scoring-goals/bear-large.jpg",
 			small: "img/scoring-goals/bear-small.jpg",
 			thumbnailsdesktop: "img/scoring-goals/bear-thumbnail-desktop.jpg",
-			thumbnailsmobile: "img/scoring-goals/bear-thumbnail-tablet-mobile.jpg"
+			thumbnailsmobile: "img/scoring-goals/bear-thumbnail-tablet-mobile.jpg",
+			tokenScoringDelegate: calculateBearTokenScoring0
+		},
+		{
+			large: "img/scoring-goals/bear-large1.jpg",
+			small: "img/scoring-goals/bear-small1.jpg",
+			thumbnailsdesktop: "img/scoring-goals/bear-thumbnail-desktop1.jpg",
+			thumbnailsmobile: "img/scoring-goals/bear-thumbnail-tablet-mobile1.jpg",
+			tokenScoringDelegate: calculateBearTokenScoring1
 		}
 	],
 	elk: [
@@ -12,7 +20,8 @@ var scoringList = {
 			large: "img/scoring-goals/elk-large.jpg",
 			small: "img/scoring-goals/elk-small.jpg",
 			thumbnailsdesktop: "img/scoring-goals/elk-thumbnail-desktop.jpg",
-			thumbnailsmobile: "img/scoring-goals/elk-thumbnail-tablet-mobile.jpg"
+			thumbnailsmobile: "img/scoring-goals/elk-thumbnail-tablet-mobile.jpg",
+			tokenScoringDelegate: calculateElkTokenScoring0
 		}
 	],
 	fox: [
@@ -20,7 +29,8 @@ var scoringList = {
 			large: "img/scoring-goals/fox-large.jpg",
 			small: "img/scoring-goals/fox-small.jpg",
 			thumbnailsdesktop: "img/scoring-goals/fox-thumbnail-desktop.jpg",
-			thumbnailsmobile: "img/scoring-goals/fox-thumbnail-tablet-mobile.jpg"
+			thumbnailsmobile: "img/scoring-goals/fox-thumbnail-tablet-mobile.jpg",
+			tokenScoringDelegate: calculateFoxTokenScoring0
 		}
 	],
 	hawk: [
@@ -28,7 +38,8 @@ var scoringList = {
 			large: "img/scoring-goals/hawk-large.jpg",
 			small: "img/scoring-goals/hawk-small.jpg",
 			thumbnailsdesktop: "img/scoring-goals/hawk-thumbnail-desktop.jpg",
-			thumbnailsmobile: "img/scoring-goals/hawk-thumbnail-tablet-mobile.jpg"
+			thumbnailsmobile: "img/scoring-goals/hawk-thumbnail-tablet-mobile.jpg",
+			tokenScoringDelegate: calculateHawkTokenScoring0
 		}
 	],
 	salmon: [
@@ -36,7 +47,8 @@ var scoringList = {
 			large: "img/scoring-goals/salmon-large.jpg",
 			small: "img/scoring-goals/salmon-small.jpg",
 			thumbnailsdesktop: "img/scoring-goals/salmon-thumbnail-desktop.jpg",
-			thumbnailsmobile: "img/scoring-goals/salmon-thumbnail-tablet-mobile.jpg"
+			thumbnailsmobile: "img/scoring-goals/salmon-thumbnail-tablet-mobile.jpg",
+			tokenScoringDelegate: calculateSalmonTokenScoring0
 		}
 	]
 };
@@ -48,6 +60,18 @@ let tokenScoring = {
 	hawk: {totalScore: 0, pickedScoring: 0},
 	salmon: {totalScore: 0, pickedScoring: 0}
 };
+
+function getRandomInt(max) {
+  return Math.floor(Math.random() * max);
+}
+
+function randomizeScores() {
+	tokenScoring.bear.pickedScoring = getRandomInt(scoringList.bear.length);
+	tokenScoring.elk.pickedScoring = getRandomInt(scoringList.elk.length);
+	tokenScoring.fox.pickedScoring = getRandomInt(scoringList.fox.length);
+	tokenScoring.hawk.pickedScoring = getRandomInt(scoringList.hawk.length);
+	tokenScoring.salmon.pickedScoring = getRandomInt(scoringList.salmon.length);
+}
 
 function setupScoringGoals() {
 	
@@ -109,11 +133,11 @@ function setupFinalScoring() {
 	checkForBlanks();
 	processPlacedTilesAndTokens();
 
-	tokenScoring.bear.totalScore = calculateBearTokenScoring();
-	tokenScoring.elk.totalScore = calculateElkTokenScoring();
-	tokenScoring.fox.totalScore = calculateFoxTokenScoring();
-	tokenScoring.hawk.totalScore = calculateHawkTokenScoring();
-	tokenScoring.salmon.totalScore = calculateSalmonTokenScoring();
+	tokenScoring.bear.totalScore = scoringList.bear[tokenScoring.bear.pickedScoring].tokenScoringDelegate();
+	tokenScoring.elk.totalScore = scoringList.elk[tokenScoring.elk.pickedScoring].tokenScoringDelegate();
+	tokenScoring.fox.totalScore = scoringList.fox[tokenScoring.fox.pickedScoring].tokenScoringDelegate();
+	tokenScoring.hawk.totalScore = scoringList.hawk[tokenScoring.hawk.pickedScoring].tokenScoringDelegate();
+	tokenScoring.salmon.totalScore = scoringList.salmon[tokenScoring.salmon.pickedScoring].tokenScoringDelegate();
 
 	const allWildlife = Object.keys(tokenScoring);
 

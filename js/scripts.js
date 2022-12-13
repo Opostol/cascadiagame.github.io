@@ -374,6 +374,11 @@ $(document).on(touchEvent,'#mobileGameInstructionsButton',function(){
 	openInNewTab(rulesURL);
 });
 
+$(document).on(touchEvent,'#randomScores',function(){
+	randomizeScores();
+	setupScoringGoals();
+});
+
 $(document).on(touchEvent,'#replaceDuplicateTokens:not([disabled])',function(){
 
 	// in case the player has already clicked a tile+token container to start the vanilla tile placement process - undo all of the active states before processing wwith the naturew cube process.

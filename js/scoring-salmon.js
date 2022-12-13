@@ -4,7 +4,7 @@ let usedSalmonTokenIDs = [];
 let potentialSalmonTokenIDs = [];
 let confirmedSalmonRuns = [];
 	
-function calculateSalmonTokenScoring() {
+var calculateSalmonTokenScoring0 = function() {
 	let result = 0;
 	let salmonScoringValues = {
 		'1': 2,
